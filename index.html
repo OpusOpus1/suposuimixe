@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <title>vtLzA5fwCnhuLJVp7</title>
+
+  <style>
+
+    body {
+
+      margin: 0;
+
+      overflow: hidden;
+
+      background: black;
+
+      color: #00FF00;
+
+      font-family: 'Courier New', monospace;
+
+    }
+
+    canvas {
+
+      display: block;
+
+    }
+
+    #message {
+
+      position: absolute;
+
+      top: 20px;
+
+      left: 20px;
+
+      color: #f7f1f1;
+
+      text-shadow: 0 0 5px #f7f1f1, 0 0 10px #f7f1f1;
+
+      font-size: 1.2em;
+
+      z-index: 1;
+
+      display: none;
+
+    }
+
+    #accessBox {
+
+      position: absolute;
+
+      top: 40%;
+
+      left: 50%;
+
+      transform: translate(-50%, -50%);
+
+      background: black;
+
+      border: 1px solid #00FF00;
+
+      padding: 30px;
+
+      text-align: center;
+
+      z-index: 10;
+
+    }
+
+    #accessInput {
+
+      background: black;
+
+      color: #00FF00;
+
+      border: 1px solid #00FF00;
+
+      padding: 8px;
+
+      font-family: monospace;
+
+    }
+
+    #accessButton {
+
+      background: black;
+
+      color: #00FF00;
+
+      border: 1px solid #00FF00;
+
+      padding: 8px 16px;
+
+      font-family: monospace;
+
+      margin-top: 10px;
+
+      cursor: pointer;
+
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div id="accessBox">
+
+    <p>Enter access code to proceed:</p>
+
+    <input type="password" id="accessInput" />
+
+    <br>
+
+    <button id="accessButton">Unlock</button>
+
+    <p id="errorMsg" style="color: red; display: none;">Access Denied</p>
+
+  </div>
+
+  <div id="message">
+
+    // Good job, we'll see if you make it all the way. // CK->.SE->-.CZ<br>
+
+    North bends.<br>
+
+    East waits.<br>
+
+    Together they speak of place.<br>
+
+    // Find the location and you will find two numbers that will lead you forward. //<br><br>
+
+
+    {*****#######.///////&&&&&&&@***%%%%%%%??????*}<br>
+
+ {*^^^^^^.******€%%%%%%####€€€$$$$$$$$$****}<br>
+
+The answers lead you to two places. A place where two couples are joined together to become one. A journey through time.<br><br>
+
+ {*****#######.^^^^^^^€€€€€€$$$$$$$$\\\*********%%€€}<br>
+
+ {*^^^^^^.%%%%%%0@@@@@@@@@&&&&**#####^^^^^^^^}<br><br>
+
+
+Good Luck.<br>
+- The Eximium Opus<br><br>
+
+
+  </div>
+
+
+
+  <canvas id="matrixCanvas"></canvas>
+
+
+
+  <script>
+
+    const canvas = document.getElementById("matrixCanvas");
+
+    const ctx = canvas.getContext("2d");
+
+
+
+    canvas.height = window.innerHeight;
+
+    canvas.width = window.innerWidth;
+
+
+
+    const letters = "01@#%&$*abcdefghijklmnopqrstuvwxyz[]{}";
+
+    const fontSize = 14;
+
+    const columns = Math.floor(canvas.width / fontSize);
+
+
+
+    const drops = [];
+
+    for (let x = 0; x < columns; x++) {
+
+      drops[x] = 1;
+
+    }
+
+
+
+    // "den som finner genväg eller omväg ditt val"
+
+    const codex = ["S", "A", "G", "I", "G", " ", "X", "E", "D", "O", "C"];
+
+    const codexPositions = codex.map((_, index) => Math.floor((columns / codex.length) * index));
+
+
+
+    function draw() {
+
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.font = fontSize + "px Courier New";
+
+
+
+      for (let i = 0; i < drops.length; i++) {
+
+        let text = letters.charAt(Math.floor(Math.random() * letters.length));
+
+
+
+        // Standard text
+
+        ctx.fillStyle = "#0F0";
+
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+
+
+        // "den som finner genväg eller omväg ditt val"
+
+        const codexIndex = codexPositions.indexOf(i);
+
+        if (codexIndex !== -1 && Math.random() > 0.98) {
+
+          text = codex[codexIndex]; // använd rätt bakvänd bokstav
+
+          ctx.fillStyle = "#B6FF00";
+
+          ctx.shadowColor = "#B6FF00";
+
+          ctx.shadowBlur = 10;
+
+          ctx.font = (fontSize * 1.5) + "px Courier New";
+
+          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+          ctx.shadowBlur = 0;
+
+          ctx.font = fontSize + "px Courier New";
+
+        }
+
+
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+
+          drops[i] = 0;
+
+        }
+
+
+
+        drops[i]++;
+
+      }
+
+    }
+
+
+
+   function unlock() {
+
+      const encrypted = "MTcxODU1MA==";
+      const password = atob(encrypted);
+
+      const input = document.getElementById("accessInput").value;
+
+      const box = document.getElementById("accessBox");
+
+      const message = document.getElementById("message");
+
+      const error = document.getElementById("errorMsg");
+
+
+
+      if (input === password) {
+
+        box.style.display = "none";
+
+        message.style.display = "block";
+
+        setInterval(draw, 35);
+
+      } else {
+
+        error.style.display = "block";
+
+      }
+
+    }
+
+
+
+    document.getElementById("accessButton").addEventListener("click", unlock);
+
+  </script>
+
+</body>
+
+</html>
